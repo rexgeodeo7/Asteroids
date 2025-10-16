@@ -12,6 +12,7 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    # Game loop
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
