@@ -1,0 +1,12 @@
+- Add a scoring system - incomplete
+- Implement multiple lives and  - incomplete
+- Add an explosion effect for the  - incomplete
+- Add acceleration to the player movement - incomplete
+- Make the objects wrap around the screen instead of disappearing - incomplete
+- Add a background image - incomplete
+- Create different weapon types - incomplete
+- Make the asteroids lumpy instead of perfectly round - incomplete
+- Make the ship have a triangular hit box instead of a circular one - incomplete
+- Add a shield power-up - incomplete
+- Add a speed power-up - incomplete
+- Add bombs that can be dropped - incomplete
