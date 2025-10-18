@@ -39,12 +39,20 @@ def main():
 
         screen.fill("black")
 
-        # draw all possible drawable objects
+        # Draw all possible drawable objects
         for thing in drawable:
             thing.draw(screen)
 
         updatable.update(dt)
 
+        # Bullet -> Asteroid hit check
+        for asteroid in asteroids:
+            for bullet in shots:
+                if asteroid.collision_check(bullet) is True:
+                    asteroid.kill()
+                    bullet.kill()
+
+        # Game over check
         for asteroid in asteroids:
             if player.collision_check(asteroid) is True:
                 print("Game Over!")
