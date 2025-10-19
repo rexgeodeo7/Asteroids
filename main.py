@@ -68,7 +68,7 @@ def game_logic(screen):
         for asteroid in asteroids:
             for bullet in shots:
                 if asteroid.collision_check(bullet) is True:
-                    asteroid.split()
+                    asteroid.explosion()
                     bullet.kill()
                     score.update()
 
