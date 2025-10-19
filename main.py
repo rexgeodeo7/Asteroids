@@ -6,7 +6,7 @@ from asteroids import Asteroid
 from shot import Shot
 from asteroidfield import AsteroidField
 from circleshape import CircleShape
-from score import Score
+from text import Score, Lives
 
 
 def main():
@@ -14,6 +14,7 @@ def main():
     pygame.font.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     score = Score()
+    lives = Lives()
 
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -31,6 +32,7 @@ def main():
     AsteroidField.containers = (updatable)
     Shot.containers = (shots, updatable, drawable)
     Score.containers = (updatable)
+    Lives.containers = (updatable)
 
     player = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
     asteroid_field = AsteroidField()
@@ -64,8 +66,10 @@ def main():
                 # iframes check
                 if player.iframes <= 0:
                     player.take_damage()
+                    lives.update()
 
         screen.blit(score.surface, (0,0))
+        screen.blit(lives.surface, ((SCREEN_WIDTH-105),0))
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000
