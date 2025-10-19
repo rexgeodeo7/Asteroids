@@ -6,11 +6,14 @@ from asteroids import Asteroid
 from shot import Shot
 from asteroidfield import AsteroidField
 from circleshape import CircleShape
+from score import Score
 
 
 def main():
     pygame.init()
+    pygame.font.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    score = Score()
 
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -27,6 +30,7 @@ def main():
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
     Shot.containers = (shots, updatable, drawable)
+    Score.containers = (updatable)
 
     player = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
     asteroid_field = AsteroidField()
@@ -51,6 +55,7 @@ def main():
                 if asteroid.collision_check(bullet) is True:
                     asteroid.split()
                     bullet.kill()
+                    score.update()
 
         # Game over check
         for asteroid in asteroids:
@@ -58,6 +63,8 @@ def main():
                 print("Game Over!")
                 sys.exit()
 
+
+        screen.blit(score.surface, (0,0))
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000

@@ -1,4 +1,4 @@
-- Add a scoring system - incomplete
+- Add a scoring system - **done**
 - Implement multiple lives and  - incomplete
 - Add an explosion effect for the  - incomplete
 - Add acceleration to the player movement - incomplete
