@@ -1,4 +1,5 @@
 import pygame
+import sys
 from circleshape import CircleShape
 from shot import Shot
 from constants import *
@@ -8,6 +9,8 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.timer =  0 # rate limit
+        self.lives = PLAYER_LIVES
+        self.iframes = 0
        
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -36,12 +39,11 @@ class Player(CircleShape):
             self.move(-dt)
 
         self.timer -= dt
+        self.iframes -= dt
 
         if self.timer <= 0:
             if keys[pygame.K_SPACE]:
                 self.shoot()
-
-
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -52,4 +54,14 @@ class Player(CircleShape):
             shot = Shot(self.position.x, self.position.y, velocity)
             self.timer = PLAYER_SHOT_COOLDOWN
 
+    def take_damage(self):
+        self.lives -= 1
+
+        if self.lives <= 0:
+            self.is_dead()
         
+        self.iframes = PLAYER_IFRAMES
+
+    def is_dead(self):
+        print("Game Over!")
+        sys.exit()

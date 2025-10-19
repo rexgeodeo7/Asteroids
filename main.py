@@ -60,9 +60,10 @@ def main():
         # Game over check
         for asteroid in asteroids:
             if player.collision_check(asteroid) is True:
-                print("Game Over!")
-                sys.exit()
 
+                # iframes check
+                if player.iframes <= 0:
+                    player.take_damage()
 
         screen.blit(score.surface, (0,0))
         pygame.display.flip()
