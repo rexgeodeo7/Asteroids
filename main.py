@@ -5,20 +5,32 @@ from player import Player
 from asteroids import Asteroid
 from shot import Shot
 from asteroidfield import AsteroidField
-from circleshape import CircleShape
 from text import Score, Lives
 
+def show_game_over_screen(screen):
+    font = pygame.font.SysFont("Arial", 30)
 
-def main():
-    pygame.init()
-    pygame.font.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    while True:
+        keys = pygame.key.get_pressed()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+    
+        gameover = font.render("Press R to Respawn", False, (255, 255, 255))
+        rect = gameover.get_rect()
+        rect.center = screen.get_rect().center
+        screen.fill("black")
+        screen.blit(gameover, rect)
+
+        if keys[pygame.K_r]:
+            return
+        
+        pygame.display.flip()
+
+def game_logic(screen):
     score = Score()
     lives = Lives()
-
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
 
     clock = pygame.time.Clock()
     dt = 0
@@ -41,7 +53,8 @@ def main():
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                respawn = False
+                return respawn
 
         screen.fill("black")
 
@@ -59,13 +72,24 @@ def main():
                     bullet.kill()
                     score.update()
 
-        # Game over check
+        # Game over
         for asteroid in asteroids:
             if player.collision_check(asteroid) is True:
 
                 # iframes check
                 if player.iframes <= 0:
-                    player.take_damage()
+                    # is dead check
+                    if player.take_damage() is True:
+                        font = pygame.font.SysFont("Arial", 30)
+                        gameover = font.render("Press R to Respawn", False, (255, 255, 255))
+                        rect = gameover.get_rect()
+                        rect.center = screen.get_rect().center
+                        screen.blit(gameover, rect)
+                        show_game_over_screen(screen)
+                        respawn = True
+                        return respawn
+                        
+
                     lives.update()
 
         screen.blit(score.surface, (0,0))
@@ -73,5 +97,20 @@ def main():
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000
+
+def main():
+    print("Starting Asteroids!")
+    print(f"Screen width: {SCREEN_WIDTH}")
+    print(f"Screen height: {SCREEN_HEIGHT}")
+
+    pygame.init()
+    pygame.font.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    respawn = True
+
+    while respawn is True:
+        respawn = game_logic(screen)
+
 if __name__ == "__main__":
     main()

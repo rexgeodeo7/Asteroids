@@ -56,12 +56,11 @@ class Player(CircleShape):
 
     def take_damage(self):
         self.lives -= 1
-
-        if self.lives <= 0:
-            self.is_dead()
-        
         self.iframes = PLAYER_IFRAMES
-
+        return self.is_dead()
+    
     def is_dead(self):
-        print("Game Over!")
-        sys.exit()
+        if self.lives <= 0:
+            return True
+        else:
+            return False
