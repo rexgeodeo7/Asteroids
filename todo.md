@@ -1,7 +1,7 @@
 - Add a scoring system - **done**
 - Implement multiple lives and respawning - **done**
 - Add an explosion effect for the asteroids  - **done**
-- Add acceleration to the player movement - incomplete
+- Add acceleration to the player movement - **done**
 - Make the objects wrap around the screen instead of disappearing - **done**
 - Add a background image - **done**
 - Create different weapon types - incomplete

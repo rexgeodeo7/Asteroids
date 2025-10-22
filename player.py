@@ -46,8 +46,14 @@ class Player(CircleShape):
                 self.shoot()
 
     def move(self, dt):        
+        multiplier = 1
+        keys = pygame.key.get_pressed()
+        
+        if keys[pygame.K_LSHIFT]:
+            multiplier = 2
+
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        next_position = self.position + forward * PLAYER_SPEED * dt
+        next_position = self.position + forward * PLAYER_SPEED * dt * multiplier
 
         if next_position.x - self.radius < 0: # left border check
             return
@@ -61,7 +67,7 @@ class Player(CircleShape):
         if next_position.y + self.radius > SCREEN_HEIGHT: # bottom border check
             return
 
-        self.position += forward * PLAYER_SPEED * dt # if none of the border cases pop up, this will execute
+        self.position += forward * PLAYER_SPEED * dt * multiplier # if none of the border cases pop up, this will execute
 
     def shoot(self):
             velocity = (pygame.Vector2(0, 1).rotate(self.rotation)) * PLAYER_SHOOT_SPEED
