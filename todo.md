@@ -3,7 +3,7 @@
 - Add an explosion effect for the asteroids  - **done**
 - Add acceleration to the player movement - incomplete
 - Make the objects wrap around the screen instead of disappearing - incomplete
-- Add a background image - incomplete
+- Add a background image - **done**
 - Create different weapon types - incomplete
 - Make the asteroids lumpy instead of perfectly round - incomplete
 - Make the ship have a triangular hit box instead of a circular one - incomplete
