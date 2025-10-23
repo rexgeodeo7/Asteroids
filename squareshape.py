@@ -2,7 +2,7 @@ import pygame
 
 # Base class for power-ups
 class SquareShape(pygame.sprite.Sprite):
-    def __init__(self, width, height):
+    def __init__(self, width, height, x=0, y=0):
             if hasattr(self, "containers"):
                 super().__init__(self.containers)
             else:
@@ -10,15 +10,15 @@ class SquareShape(pygame.sprite.Sprite):
             
             self.width = width
             self.height = height
-            self.position = pygame.Vector2(self.width/2, self.height/2) # center coordinates
-            self.radius =  (self.width - (self.width/2)) # a work-around around circle radius but with squares for square-circle hitbox collision
+            self.position = pygame.Vector2(x, y) # center coordinates
+            self.radius =  width / 2 # a work-around around circle radius but with squares for square-circle hitbox collision
 
 
     def draw(self, screen):
         # overwriten by children
         pass
 
-    def update(self, dt):
+    def update(self, dt): # no use of dt since the common factor between its children is that they will NOT move
         # overwriten by children
         pass
 

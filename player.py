@@ -12,7 +12,9 @@ class Player(CircleShape):
         self.lives = PLAYER_LIVES
         self.iframes = 0
         self.multiplier = 1
-       
+        self.speed_powerup_multiplier = 1
+        self.speed_powerup_timer = 0
+        
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
@@ -42,6 +44,11 @@ class Player(CircleShape):
         self.timer -= dt
         self.iframes -= dt
 
+        if self.speed_powerup_timer > 0:
+            self.speed_powerup_timer -= dt
+            if self.speed_powerup_timer <= 0:
+                self.speed_powerup_multiplier = 1  # reset when timer expires
+
         if self.timer <= 0:
             if keys[pygame.K_SPACE]:
                 self.shoot()
@@ -54,7 +61,7 @@ class Player(CircleShape):
             self.multiplier = 2
 
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        next_position = self.position + forward * PLAYER_SPEED * dt * self.multiplier
+        next_position = self.position + forward * PLAYER_SPEED * dt * self.multiplier * self.speed_powerup_multiplier
 
         if next_position.x - self.radius < 0: # left border check
             return
@@ -68,7 +75,7 @@ class Player(CircleShape):
         if next_position.y + self.radius > SCREEN_HEIGHT: # bottom border check
             return
 
-        self.position += forward * PLAYER_SPEED * dt * self.multiplier # if none of the border cases pop up, this will execute
+        self.position += forward * PLAYER_SPEED * dt * self.multiplier * self.speed_powerup_multiplier # if none of the border cases pop up, this will execute
 
     def shoot(self):
             velocity = (pygame.Vector2(0, 1).rotate(self.rotation)) * PLAYER_SHOOT_SPEED
