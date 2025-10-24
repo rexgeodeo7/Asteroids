@@ -47,6 +47,7 @@ def game_logic(screen):
     AsteroidField.containers = (updatable)
     PowerUpField.containers = (updatable)
     Speed.containers = (updatable, drawable, power_ups)
+    Shield.containers = (updatable, drawable, power_ups)
     Shot.containers = (shots, updatable, drawable)
     Score.containers = (updatable)
     Lives.containers = (updatable)
@@ -80,6 +81,12 @@ def game_logic(screen):
                     bullet.kill()
                     score.update()
 
+        # Power-ups
+        for powerup in power_ups:
+            if powerup.collision_check(player):
+                powerup.is_taken = True
+                powerup.power_up(player)
+
         # Game over (refactored)
         for asteroid in asteroids:
             if not player.collision_check(asteroid):
@@ -89,24 +96,20 @@ def game_logic(screen):
             if player.iframes >= 0:
                 continue
 
+            is_dead, was_life_lost = player.take_damage()
             # is dead check
-            if player.take_damage():
+            if was_life_lost:
+                lives.update()
+            
+            if is_dead:
+                respawn = True
                 font = pygame.font.SysFont("Arial", 30)
                 gameover = font.render("Press R to Respawn", False, (255, 255, 255))
                 rect = gameover.get_rect()
                 rect.center = screen.get_rect().center
                 screen.blit(gameover, rect)
                 show_game_over_screen(screen)
-                respawn = True
                 return respawn
-
-            lives.update()
-
-        # Power-ups
-        for powerup in power_ups:
-            if powerup.collision_check(player):
-                powerup.is_taken = True
-                powerup.power_up(player)
             
         screen.blit(score.surface, (0,0))
         screen.blit(lives.surface, ((SCREEN_WIDTH-105),0))

@@ -14,7 +14,10 @@ class PowerUpField(pygame.sprite.Sprite):
         x = random.uniform(0, SCREEN_WIDTH)
         y = random.uniform(0, SCREEN_HEIGHT)
 
-        power_up = Speed(width, height, x, y)
+
+        # randomize powerups
+        power_up_random_choice = random.choice([Speed, Shield])
+        power_up = power_up_random_choice(width, height, x, y)
         # randomizes spawn timer interval again after it hits 0 (aka. spawns a new powerup)
         self.spawn_timer_interval = random.uniform(MIN_SPAWN_TIME, MAX_SPAWN_TIME)
 

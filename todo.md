@@ -7,6 +7,6 @@
 - Create different weapon types - incomplete
 - Make the asteroids lumpy instead of perfectly round - incomplete
 - Make the ship have a triangular hit box instead of a circular one - incomplete
-- Add a shield power-up - incomplete
+- Add a shield power-up - **done**
 - Add a speed power-up - **done**
 - Add bombs that can be dropped - incomplete
